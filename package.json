@@ -1,5 +1,30 @@
 {
   "name": "contracts0_100",
   "packageManager": "yarn@4.4.1",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@aztec/accounts": "0.60.0",
+    "@aztec/aztec.js": "0.60.0",
+    "@aztec/builder": "0.60.0",
+    "@aztec/noir-contracts.js": "0.60.0",
+    "@types/node": "^22.5.4",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.13",
+    "@types/mocha": "^10.0.6",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2"
+  },
+  "scripts": {
+    "clean": "rm -rf ./src/circuits/artifacts ./src/circuits/target",
+    "codegen": "aztec codegen ./src/circuits/target --outdir src/circuits/src/artifacts",
+    "compile": "cd src/circuits && ${AZTEC_NARGO:-aztec-nargo} compile && cd ../..",
+    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules $(yarn bin jest) --no-cache --runInBand --config jest.integration.config.json && aztec test"
+  }
 }
