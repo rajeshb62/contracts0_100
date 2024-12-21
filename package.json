@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
-    "@types/jest": "^29.5.13",
+    "@types/jest": "^29.5.14",
     "@types/mocha": "^10.0.6",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
@@ -25,6 +25,8 @@
     "clean": "rm -rf ./src/circuits/artifacts ./src/circuits/target",
     "codegen": "aztec codegen ./src/circuits/target --outdir src/circuits/src/artifacts",
     "compile": "cd src/circuits && ${AZTEC_NARGO:-aztec-nargo} compile && cd ../..",
-    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules $(yarn bin jest) --no-cache --runInBand --config jest.integration.config.json && aztec test"
-  }
+    "test": "NODE_NO_WARNINGS=1 node --experimental-vm-modules $(yarn bin jest) --no-cache --runInBand --config jest.integration.config.json && cd src/circuits && aztec test",
+    "get-block": "node --loader ts-node/esm ./scripts/getBlock.ts"
+  },
+  "type": "module"
 }

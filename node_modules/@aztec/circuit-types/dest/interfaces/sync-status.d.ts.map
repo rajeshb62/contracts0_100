@@ -1,0 +1,1 @@
+{"version":3,"file":"sync-status.d.ts","sourceRoot":"","sources":["../../src/interfaces/sync-status.ts"],"names":[],"mappings":"AAAA,0EAA0E;AAC1E,MAAM,MAAM,UAAU,GAAG;IACvB,6DAA6D;IAC7D,MAAM,EAAE,MAAM,CAAC;IACf,qGAAqG;IACrG,KAAK,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;CAC/B,CAAC"}

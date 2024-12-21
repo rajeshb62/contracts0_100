@@ -1,0 +1,1 @@
+{"version":3,"file":"create_recipient.d.ts","sourceRoot":"","sources":["../../src/wallet/create_recipient.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,GAAG,EAAE,MAAM,sBAAsB,CAAC;AAChD,OAAO,EAAE,eAAe,EAAE,MAAM,oBAAoB,CAAC;AAErD;;;;GAIG;AACH,wBAAsB,eAAe,CAAC,GAAG,EAAE,GAAG,GAAG,OAAO,CAAC,eAAe,CAAC,CAMxE"}

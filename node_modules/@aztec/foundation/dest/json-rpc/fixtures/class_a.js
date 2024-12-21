@@ -1,0 +1,17 @@
+/**
+ * Test class for testing string converter.
+ */
+export class ToStringClass {
+    constructor(/** A value */ x, /** Another value */ y) {
+        this.x = x;
+        this.y = y;
+    }
+    toString() {
+        return [this.x, this.y].join('-');
+    }
+    static fromString(value) {
+        const [x, y] = value.split('-');
+        return new ToStringClass(x, y);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2xhc3NfYS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9qc29uLXJwYy9maXh0dXJlcy9jbGFzc19hLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBQ0gsTUFBTSxPQUFPLGFBQWE7SUFDeEIsWUFBWSxjQUFjLENBQWlCLENBQVMsRUFBRSxvQkFBb0IsQ0FBaUIsQ0FBUztRQUF6RCxNQUFDLEdBQUQsQ0FBQyxDQUFRO1FBQXVDLE1BQUMsR0FBRCxDQUFDLENBQVE7SUFBRyxDQUFDO0lBRXhHLFFBQVE7UUFDTixPQUFPLENBQUMsSUFBSSxDQUFDLENBQUMsRUFBRSxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBQ3BDLENBQUM7SUFFRCxNQUFNLENBQUMsVUFBVSxDQUFDLEtBQWE7UUFDN0IsTUFBTSxDQUFDLENBQUMsRUFBRSxDQUFDLENBQUMsR0FBRyxLQUFLLENBQUMsS0FBSyxDQUFDLEdBQUcsQ0FBQyxDQUFDO1FBQ2hDLE9BQU8sSUFBSSxhQUFhLENBQUMsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDO0lBQ2pDLENBQUM7Q0FDRiJ9

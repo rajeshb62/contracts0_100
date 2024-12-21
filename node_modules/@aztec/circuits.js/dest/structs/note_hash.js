@@ -1,0 +1,71 @@
+import { AztecAddress } from '@aztec/foundation/aztec-address';
+import { Fr } from '@aztec/foundation/fields';
+import { BufferReader, FieldReader, serializeToBuffer } from '@aztec/foundation/serialize';
+export class NoteHash {
+    constructor(value, counter) {
+        this.value = value;
+        this.counter = counter;
+    }
+    toFields() {
+        return [this.value, new Fr(this.counter)];
+    }
+    static fromFields(fields) {
+        const reader = FieldReader.asReader(fields);
+        return new NoteHash(reader.readField(), reader.readU32());
+    }
+    isEmpty() {
+        return this.value.isZero() && !this.counter;
+    }
+    static empty() {
+        return new NoteHash(Fr.zero(), 0);
+    }
+    toBuffer() {
+        return serializeToBuffer(this.value, this.counter);
+    }
+    static fromBuffer(buffer) {
+        const reader = BufferReader.asReader(buffer);
+        return new NoteHash(Fr.fromBuffer(reader), reader.readNumber());
+    }
+    toString() {
+        return `value=${this.value} counter=${this.counter}`;
+    }
+    scope(contractAddress) {
+        return new ScopedNoteHash(this, contractAddress);
+    }
+}
+export class ScopedNoteHash {
+    constructor(noteHash, contractAddress) {
+        this.noteHash = noteHash;
+        this.contractAddress = contractAddress;
+    }
+    get counter() {
+        return this.noteHash.counter;
+    }
+    get value() {
+        return this.noteHash.value;
+    }
+    toFields() {
+        return [...this.noteHash.toFields(), this.contractAddress.toField()];
+    }
+    static fromFields(fields) {
+        const reader = FieldReader.asReader(fields);
+        return new ScopedNoteHash(reader.readObject(NoteHash), AztecAddress.fromField(reader.readField()));
+    }
+    isEmpty() {
+        return this.noteHash.isEmpty() && this.contractAddress.isZero();
+    }
+    static empty() {
+        return new ScopedNoteHash(NoteHash.empty(), AztecAddress.ZERO);
+    }
+    toBuffer() {
+        return serializeToBuffer(this.noteHash, this.contractAddress);
+    }
+    static fromBuffer(buffer) {
+        const reader = BufferReader.asReader(buffer);
+        return new ScopedNoteHash(NoteHash.fromBuffer(reader), AztecAddress.fromBuffer(reader));
+    }
+    toString() {
+        return `noteHash=${this.noteHash} contractAddress=${this.contractAddress}`;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibm90ZV9oYXNoLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL3N0cnVjdHMvbm90ZV9oYXNoLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQ0FBaUMsQ0FBQztBQUMvRCxPQUFPLEVBQUUsRUFBRSxFQUFFLE1BQU0sMEJBQTBCLENBQUM7QUFDOUMsT0FBTyxFQUFFLFlBQVksRUFBRSxXQUFXLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSw2QkFBNkIsQ0FBQztBQUkzRixNQUFNLE9BQU8sUUFBUTtJQUNuQixZQUFtQixLQUFTLEVBQVMsT0FBZTtRQUFqQyxVQUFLLEdBQUwsS0FBSyxDQUFJO1FBQVMsWUFBTyxHQUFQLE9BQU8sQ0FBUTtJQUFHLENBQUM7SUFFeEQsUUFBUTtRQUNOLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxFQUFFLElBQUksRUFBRSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDO0lBQzVDLENBQUM7SUFFRCxNQUFNLENBQUMsVUFBVSxDQUFDLE1BQTBCO1FBQzFDLE1BQU0sTUFBTSxHQUFHLFdBQVcsQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDNUMsT0FBTyxJQUFJLFFBQVEsQ0FBQyxNQUFNLENBQUMsU0FBUyxFQUFFLEVBQUUsTUFBTSxDQUFDLE9BQU8sRUFBRSxDQUFDLENBQUM7SUFDNUQsQ0FBQztJQUVELE9BQU87UUFDTCxPQUFPLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxFQUFFLElBQUksQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDO0lBQzlDLENBQUM7SUFFRCxNQUFNLENBQUMsS0FBSztRQUNWLE9BQU8sSUFBSSxRQUFRLENBQUMsRUFBRSxDQUFDLElBQUksRUFBRSxFQUFFLENBQUMsQ0FBQyxDQUFDO0lBQ3BDLENBQUM7SUFFRCxRQUFRO1FBQ04sT0FBTyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsS0FBSyxFQUFFLElB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

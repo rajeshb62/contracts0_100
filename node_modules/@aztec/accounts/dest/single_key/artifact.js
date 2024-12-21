@@ -1,0 +1,4 @@
+import { loadContractArtifact } from '@aztec/aztec.js';
+import SchnorrSingleKeyAccountContractJson from '../../artifacts/SchnorrSingleKeyAccount.json' assert { type: 'json' };
+export const SchnorrSingleKeyAccountContractArtifact = loadContractArtifact(SchnorrSingleKeyAccountContractJson);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXJ0aWZhY3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvc2luZ2xlX2tleS9hcnRpZmFjdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQTZCLG9CQUFvQixFQUFFLE1BQU0saUJBQWlCLENBQUM7QUFFbEYsT0FBTyxtQ0FBbUMsTUFBTSw4Q0FBOEMsQ0FBQyxTQUFTLElBQUksRUFBRSxNQUFNLEVBQUUsQ0FBQztBQUV2SCxNQUFNLENBQUMsTUFBTSx1Q0FBdUMsR0FBRyxvQkFBb0IsQ0FDekUsbUNBQTJELENBQzVELENBQUMifQ==

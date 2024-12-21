@@ -1,0 +1,24 @@
+import { type ContractArtifact, type FunctionSelector } from '@aztec/foundation/abi';
+import { type ContractFunctionInteraction } from '../contract/contract_function_interaction.js';
+import { type Wallet } from '../wallet/index.js';
+/**
+ * Sets up a call to broadcast a private function's bytecode via the ClassRegisterer contract.
+ * Note that this is not required for users to call the function, but is rather a convenience to make
+ * this code publicly available so dapps or wallets do not need to redistribute it.
+ * @param wallet - Wallet to send the transaction.
+ * @param artifact - Contract artifact that contains the function to be broadcast.
+ * @param selector - Selector of the function to be broadcast.
+ * @returns A ContractFunctionInteraction object that can be used to send the transaction.
+ */
+export declare function broadcastPrivateFunction(wallet: Wallet, artifact: ContractArtifact, selector: FunctionSelector): Promise<ContractFunctionInteraction>;
+/**
+ * Sets up a call to broadcast an unconstrained function's bytecode via the ClassRegisterer contract.
+ * Note that this is not required for users to call the function, but is rather a convenience to make
+ * this code publicly available so dapps or wallets do not need to redistribute it.
+ * @param wallet - Wallet to send the transaction.
+ * @param artifact - Contract artifact that contains the function to be broadcast.
+ * @param selector - Selector of the function to be broadcast.
+ * @returns A ContractFunctionInteraction object that can be used to send the transaction.
+ */
+export declare function broadcastUnconstrainedFunction(wallet: Wallet, artifact: ContractArtifact, selector: FunctionSelector): Promise<ContractFunctionInteraction>;
+//# sourceMappingURL=broadcast_function.d.ts.map

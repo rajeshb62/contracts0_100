@@ -48,6 +48,7 @@ import {
   beforeAll(async () => {
       logger = createDebugLogger("aztec:PrivateGroups");
       logger.info("Aztec-PrivateGroups tests running");
+      console.log("started")
   
       // Setup PXE
       pxe = await setupSandbox();
@@ -121,3 +122,4 @@ import {
         console.log("getBalance", getBalance);
         expect(getBalance).toBe(100n);
        });
+    });

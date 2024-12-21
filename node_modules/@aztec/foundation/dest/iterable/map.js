@@ -1,0 +1,37 @@
+import { isAsyncIterable } from './isAsyncIt.js';
+import { peek } from './peek.js';
+function map(source, func) {
+    let index = 0;
+    if (isAsyncIterable(source)) {
+        return (async function* () {
+            for await (const val of source) {
+                yield func(val, index++);
+            }
+        })();
+    }
+    // if mapping function returns a promise we have to return an async generator
+    const peekable = peek(source);
+    const { value, done } = peekable.next();
+    if (done === true) {
+        return (function* () { })();
+    }
+    const res = func(value, index++);
+    // @ts-expect-error .then is not present on O
+    if (typeof res.then === 'function') {
+        return (async function* () {
+            yield await res;
+            for await (const val of peekable) {
+                yield func(val, index++);
+            }
+        })();
+    }
+    const fn = func;
+    return (function* () {
+        yield res;
+        for (const val of peekable) {
+            yield fn(val, index++);
+        }
+    })();
+}
+export { map };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFwLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2l0ZXJhYmxlL21hcC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFDakQsT0FBTyxFQUFFLElBQUksRUFBRSxNQUFNLFdBQVcsQ0FBQztBQWtCakMsU0FBUyxHQUFHLENBQ1YsTUFBc0MsRUFDdEMsSUFBK0M7SUFFL0MsSUFBSSxLQUFLLEdBQUcsQ0FBQyxDQUFDO0lBRWQsSUFBSSxlQUFlLENBQUMsTUFBTSxDQUFDLEVBQUUsQ0FBQztRQUM1QixPQUFPLENBQUMsS0FBSyxTQUFTLENBQUM7WUFDckIsSUFBSSxLQUFLLEVBQUUsTUFBTSxHQUFHLElBQUksTUFBTSxFQUFFLENBQUM7Z0JBQy9CLE1BQU0sSUFBSSxDQUFDLEdBQUcsRUFBRSxLQUFLLEVBQUUsQ0FBQyxDQUFDO1lBQzNCLENBQUM7UUFDSCxDQUFDLENBQUMsRUFBRSxDQUFDO0lBQ1AsQ0FBQztJQUVELDZFQUE2RTtJQUM3RSxNQUFNLFFBQVEsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUM7SUFDOUIsTUFBTSxFQUFFLEtBQUssRUFBRSxJQUFJLEVBQUUsR0FBRyxRQUFRLENBQUMsSUFBSSxFQUFFLENBQUM7SUFFeEMsSUFBSSxJQUFJLEtBQUssSUFBSSxFQUFFLENBQUM7UUFDbEIsT0FBTyxDQUFDLFFBQVEsQ0FBQyxNQUFLLENBQUMsQ0FBQyxFQUFFLENBQUM7SUFDN0IsQ0FBQztJQUVELE1BQU0sR0FBRyxHQUFHLElBQUksQ0FBQyxLQUFLLEVBQUUsS0FBSyxFQUFFLENBQUMsQ0FBQztJQUVqQyw2Q0FBNkM7SUFDN0MsSUFBSSxPQUFPLEdBQUcsQ0FBQyxJQUFJLEtBQUssVUFBVSxFQUFFLENBQUM7UUFDbkMsT0FBTyxDQUFDLEtBQUssU0FBUyxDQUFDO1lBQ3JCLE1BQU0sTUFBTSxHQUFHLENBQUM7WUFFaEIsSUFBSSxLQUFLLEVBQUUsTUFBTSxHQUFHLElBQUksUUFBUSxFQUFFLENBQUM7Z0JBQ2pDLE1BQU0sSUFBSSxDQUFDLEdBQUcsRUFBRSxLQUFLLEVBQUUsQ0FBQyxDQUFDO1lBQzNCLENBQUM7UUFDSCxDQUFDLENBQUMsRUFBRSxDQUFDO0lBQ1AsQ0FBQztJQUVELE1BQU0sRUFBRSxHQUFHLElBQW9DLENBQUM7SUFFaEQsT0FBTyxDQUFDLFFBQVEsQ0FBQztRQUNmLE1BQU0sR0FBUSxDQUFDO1FBRWYsS0FBSyxNQUFNLEdBQUcsSUFBSSxRQUFRLEVBQUUsQ0FBQztZQUMzQixNQUFNLEVBQUUsQ0FBQyxHQUFHLEVBQUUsS0FBSyxFQUFFLENBQUMsQ0FBQztRQUN6QixDQUFDO0lBQ0gsQ0FBQyxDQUFDLEVBQUUsQ0FBQztBQUNQLENBQUM7QUFFRCxPQUFPLEVBQUUsR0FBRyxFQUFFLENBQUMifQ==
